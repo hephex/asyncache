@@ -2,6 +2,8 @@
 
 Helpers to use cachetools with asyncio.
 
+[![Build Status](https://www.travis-ci.org/hephex/asyncache.svg?branch=master)](https://www.travis-ci.org/hephex/asyncache)
+[![Coverage Status](https://coveralls.io/repos/github/hephex/asyncache/badge.svg?branch=master)](https://coveralls.io/github/hephex/asyncache?branch=master)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 ## Example
