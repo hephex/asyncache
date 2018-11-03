@@ -3,12 +3,12 @@ from setuptools import find_packages, setup
 
 setup(
     name="asyncache",
-    version="0.1.0",
+    version="0.1.1",
     url="https://github.com/hephex/asyncache",
     license="MIT",
     author="Hephex",
     description="Helpers to use cachetools with async functions",
-    long_description=open("README.md").read(),
+    long_description=open("README.rst").read(),
     keywords="cache caching memoize memoizing memoization async",
     packages=find_packages(exclude=["tests", "tests.*"]),
     install_requires=["cachetools>=2.1"],
