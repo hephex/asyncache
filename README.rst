@@ -3,6 +3,10 @@ asyncache
 
 Helpers to use cachetools with asyncio.
 
+.. image:: https://img.shields.io/pypi/v/asyncache
+   :target: https://pypi.org/project/asyncache/
+   :alt: Latest PyPI version
+
 .. image:: https://travis-ci.org/hephex/asyncache.svg?branch=master
     :target: https://travis-ci.org/hephex/asyncache
 
@@ -11,6 +15,13 @@ Helpers to use cachetools with asyncio.
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/ambv/black
+
+Installation
+============
+
+asyncache is available from PyPI_ and can be installed by running::
+
+  pip install asyncache
 
 Example
 =======
