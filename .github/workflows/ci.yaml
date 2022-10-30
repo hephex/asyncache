@@ -69,7 +69,7 @@ jobs:
       # And finally run all commands
       - run: poetry run black --check ./asyncache ./tests
       - run: poetry run isort --check ./asyncache ./tests
-      - run: poetry run pylint ./asyncache ./tests
-      - run: poetry run flake8 ./asyncache ./tests
+      - run: poetry run pylint ./asyncache
+      - run: poetry run flake8 ./asyncache
       - run: poetry run pytest ./tests
       - run: poetry run mypy ./asyncache
