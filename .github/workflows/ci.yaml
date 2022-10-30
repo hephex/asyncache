@@ -35,7 +35,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.local
-          key: poetry-1.2.2-0
+          key: poetry-1.2.2-0-py-${{ matrix.python-version }}
 
       # Install Poetry. You could do this manually, or there are several actions that do this.
       # `snok/install-poetry` seems to be minimal yet complete, and really just calls out to
