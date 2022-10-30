@@ -2,9 +2,9 @@ import asyncio
 import functools
 import unittest
 
-from asyncache import cached
-
 import cachetools
+
+from asyncache import cached
 
 
 def sync(func):

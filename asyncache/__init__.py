@@ -10,7 +10,7 @@ from cachetools import keys
 __all__ = ["cached"]
 
 
-class nullcontext:
+class NullContext:
     """A class for noop context managers."""
 
     def __enter__(self):
@@ -40,7 +40,7 @@ def cached(cache, key=keys.hashkey, lock=None):
     the cache when gets updated. If it wraps a coroutine, ``lock``
     must implement ``__aenter__`` and ``__aexit__``.
     """
-    lock = lock or nullcontext()
+    lock = lock or NullContext()
 
     def decorator(func):
         if inspect.iscoroutinefunction(func):
