@@ -77,7 +77,6 @@ jobs:
       - run: poetry run black --check ./asyncache ./tests
       - run: poetry run isort --check ./asyncache ./tests
       - run: poetry run pylint ./asyncache
-      - run: poetry run flake8 ./asyncache
       - run: poetry run pytest ./tests
       - run: poetry run mypy ./asyncache
       - run: poetry run sphinx-build -W -b html -d /tmp/docs/trees docs /tmp/docs/html

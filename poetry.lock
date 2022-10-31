@@ -146,19 +146,6 @@ python-versions = ">=3.7"
 test = ["pytest (>=6)"]
 
 [[package]]
-name = "flake8"
-version = "5.0.4"
-description = "the modular source code checker: pep8 pyflakes and co"
-category = "dev"
-optional = false
-python-versions = ">=3.6.1"
-
-[package.dependencies]
-mccabe = ">=0.7.0,<0.8.0"
-pycodestyle = ">=2.9.0,<2.10.0"
-pyflakes = ">=2.5.0,<2.6.0"
-
-[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -318,22 +305,6 @@ python-versions = ">=3.6"
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
-
-[[package]]
-name = "pycodestyle"
-version = "2.9.1"
-description = "Python style guide checker"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[[package]]
-name = "pyflakes"
-version = "2.5.0"
-description = "passive checker of Python programs"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
 
 [[package]]
 name = "pygments"
@@ -620,7 +591,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "354e9e8160ba99c508dca593f5169447123380ce725797bfeb9219acf8f353ed"
+content-hash = "26caf6d97d9f746680a53d5080dd2dc2c1b12692282fa10b4a0b361a8c6a5a7c"
 
 [metadata.files]
 alabaster = []
@@ -636,7 +607,6 @@ colorama = []
 dill = []
 docutils = []
 exceptiongroup = []
-flake8 = []
 idna = []
 imagesize = []
 importlib-metadata = []
@@ -652,8 +622,6 @@ packaging = []
 pathspec = []
 platformdirs = []
 pluggy = []
-pycodestyle = []
-pyflakes = []
 pygments = []
 pylint = []
 pyparsing = []
