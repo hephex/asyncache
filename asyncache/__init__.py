@@ -5,8 +5,7 @@ asyncio.
 import functools
 import inspect
 from contextlib import AbstractContextManager
-from typing import (Any, Callable, MutableMapping, Optional, Protocol, Tuple,
-                    TypeVar)
+from typing import Any, Callable, MutableMapping, Optional, Protocol, Tuple, TypeVar
 
 from cachetools import keys
 
