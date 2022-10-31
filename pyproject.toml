@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.rst"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 cachetools = "^5.2.0"
 mypy = "^0.982"
 types-cachetools = "^5.2.1"
