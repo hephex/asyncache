@@ -2,8 +2,8 @@
 Helpers to use [cachetools](https://github.com/tkem/cachetools) with
 asyncio.
 """
-import functools
 import asyncio
+import functools
 from contextlib import AbstractContextManager
 from typing import Any, Callable, MutableMapping, Optional, Protocol, Tuple, TypeVar
 
