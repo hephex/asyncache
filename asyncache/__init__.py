@@ -2,8 +2,8 @@
 Helpers to use [cachetools](https://github.com/tkem/cachetools) with
 asyncio.
 """
+import asyncio
 import functools
-import inspect
 from contextlib import AbstractContextManager
 from typing import Any, Callable, MutableMapping, Optional, Protocol, Tuple, TypeVar
 
@@ -64,7 +64,7 @@ def cached(
     lock = lock or NullContext()
 
     def decorator(func):
-        if inspect.iscoroutinefunction(func):
+        if asyncio.iscoroutinefunction(func):
 
             async def wrapper(*args, **kwargs):
                 k = key(*args, **kwargs)
