@@ -4,10 +4,25 @@ asyncio.
 """
 import functools
 import inspect
+from contextlib import AbstractContextManager
+from typing import Any, Callable, MutableMapping, Optional, Protocol, Tuple, TypeVar
 
 from cachetools import keys
 
 __all__ = ["cached"]
+
+
+_KT = TypeVar("_KT")
+_T = TypeVar("_T")
+
+
+class IdentityFunction(Protocol):  # pylint: disable=too-few-public-methods
+    """
+    Type for a function returning the same type as the one it received.
+    """
+
+    def __call__(self, __x: _T) -> _T:
+        ...
 
 
 class NullContext:
@@ -30,7 +45,13 @@ class NullContext:
         return None
 
 
-def cached(cache, key=keys.hashkey, lock=None):
+def cached(
+    cache: Optional[MutableMapping[_KT, Any]],
+    # ignoring the mypy error to be consistent with the type used
+    # in https://github.com/python/typeshed/tree/master/stubs/cachetools
+    key: Callable[..., Tuple[_KT, ...]] = keys.hashkey,  # type:ignore
+    lock: Optional["AbstractContextManager[Any]"] = None,
+) -> IdentityFunction:
     """
     Decorator to wrap a function or a coroutine with a memoizing callable
     that saves results in a cache.
