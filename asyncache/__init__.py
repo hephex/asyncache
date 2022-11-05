@@ -5,7 +5,7 @@ asyncio.
 import asyncio
 import functools
 from contextlib import AbstractContextManager
-from typing import Any, Callable, MutableMapping, Optional, Protocol, Tuple, TypeVar
+from typing import Any, Callable, MutableMapping, Optional, Protocol, TypeVar
 
 from cachetools import keys
 
@@ -49,7 +49,7 @@ def cached(
     cache: Optional[MutableMapping[_KT, Any]],
     # ignoring the mypy error to be consistent with the type used
     # in https://github.com/python/typeshed/tree/master/stubs/cachetools
-    key: Callable[..., Tuple[_KT, ...]] = keys.hashkey,  # type:ignore
+    key: Callable[..., _KT] = keys.hashkey,  # type:ignore
     lock: Optional["AbstractContextManager[Any]"] = None,
 ) -> IdentityFunction:
     """
@@ -109,5 +109,72 @@ def cached(
                 return val
 
         return functools.wraps(func)(wrapper)
+
+    return decorator
+
+
+def cachedmethod(
+    cache: Callable[[Any], MutableMapping[_KT, Any] | None],
+    # ignoring the mypy error to be consistent with the type used
+    # in https://github.com/python/typeshed/tree/master/stubs/cachetools
+    key: Callable[..., _KT] = keys.hashkey,  # type:ignore
+    lock: Callable[[Any], "AbstractContextManager[Any]"] | None = None,
+) -> IdentityFunction:
+    lock = lock or (lambda _: NullContext())
+
+    def decorator(method):
+        if asyncio.iscoroutinefunction(method):
+
+            async def wrapper(self, *args, **kwargs):
+                c = cache(self)
+                if c is None:
+                    return (await method(self, *args, **kwargs))
+
+                k = key(self, *args, **kwargs)
+                try:
+                    async with lock(self):
+                        return c[k]
+
+                except KeyError:
+                    pass  # key not found
+
+                val = await method(self, *args, **kwargs)
+
+                try:
+                    async with lock(self):
+                        c[k] = val
+
+                except ValueError:
+                    pass  # val too large
+
+                return val
+
+        else:
+
+            def wrapper(self, *args, **kwargs):
+                c = cache(self)
+                if c is None:
+                    return method(self, *args, **kwargs)
+
+                k = key(*args, **kwargs)
+                try:
+                    with lock(self):
+                        return c[k]
+
+                except KeyError:
+                    pass  # key not found
+
+                val = method(self, *args, **kwargs)
+
+                try:
+                    with lock(self):
+                        c[k] = val
+
+                except ValueError:
+                    pass  # val too large
+
+                return val
+
+        return functools.wraps(method)(wrapper)
 
     return decorator
