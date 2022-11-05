@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncache"
-version = "0.1.1"
+version = "0.2.0"
 description = "Helpers to use cachetools with async code."
 authors = ["hephex <figus.federico@gmail.com>"]
 license = "MIT"
