@@ -1,7 +1,7 @@
 # based on https://jacobian.org/til/github-actions-poetry/
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
 
 name: check

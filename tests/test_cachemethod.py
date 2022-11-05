@@ -2,6 +2,7 @@ import operator
 import unittest
 
 from cachetools import LRUCache, keys
+
 from asyncache import cachedmethod
 
 
@@ -37,6 +38,7 @@ class Locked:
 
     def __exit__(self, *exc):
         pass
+
 
 class AsyncCached:
     def __init__(self, cache, count=0):
@@ -138,9 +140,9 @@ class CachedMethodTestSync(unittest.TestCase):
         self.assertEqual(cached.get(1.0), 4)
 
     def test_weakref(self):
-        import weakref
         import fractions
         import gc
+        import weakref
 
         # in Python 3.7, `int` does not support weak references even
         # when subclassed, but Fraction apparently does...
@@ -273,9 +275,9 @@ class CachedMethodTestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((await cached.get(1.0)), 4)
 
     async def test_weakref(self):
-        import weakref
         import fractions
         import gc
+        import weakref
 
         # in Python 3.7, `int` does not support weak references even
         # when subclassed, but Fraction apparently does...

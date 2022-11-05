@@ -120,20 +120,25 @@ def cachedmethod(
     key: Callable[..., _KT] = keys.hashkey,  # type:ignore
     lock: Callable[[Any], "AbstractContextManager[Any]"] | None = None,
 ) -> IdentityFunction:
+    """Decorator to wrap a class or instance method with a memoizing
+    callable that saves results in a cache. This works similarly to
+    `cached`, but the arguments `cache` and `lock` are callables that
+    return the cache object and the lock respectively.
+    """
     lock = lock or (lambda _: NullContext())
 
     def decorator(method):
         if asyncio.iscoroutinefunction(method):
 
             async def wrapper(self, *args, **kwargs):
-                c = cache(self)
-                if c is None:
-                    return (await method(self, *args, **kwargs))
+                method_cache = cache(self)
+                if method_cache is None:
+                    return await method(self, *args, **kwargs)
 
                 k = key(self, *args, **kwargs)
                 try:
                     async with lock(self):
-                        return c[k]
+                        return method_cache[k]
 
                 except KeyError:
                     pass  # key not found
@@ -142,7 +147,7 @@ def cachedmethod(
 
                 try:
                     async with lock(self):
-                        c[k] = val
+                        method_cache[k] = val
 
                 except ValueError:
                     pass  # val too large
@@ -152,14 +157,14 @@ def cachedmethod(
         else:
 
             def wrapper(self, *args, **kwargs):
-                c = cache(self)
-                if c is None:
+                method_cache = cache(self)
+                if method_cache is None:
                     return method(self, *args, **kwargs)
 
                 k = key(*args, **kwargs)
                 try:
                     with lock(self):
-                        return c[k]
+                        return method_cache[k]
 
                 except KeyError:
                     pass  # key not found
@@ -168,7 +173,7 @@ def cachedmethod(
 
                 try:
                     with lock(self):
-                        c[k] = val
+                        method_cache[k] = val
 
                 except ValueError:
                     pass  # val too large
