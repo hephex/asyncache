@@ -1,3 +1,8 @@
+v0.3.0 (2022-11-06)
+===================
+
+* New `cachedmethod` decorator for async class methods
+
 v0.2.0 (2022-11-05)
 ===================
 
