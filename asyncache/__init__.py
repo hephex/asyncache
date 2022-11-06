@@ -114,11 +114,11 @@ def cached(
 
 
 def cachedmethod(
-    cache: Callable[[Any], MutableMapping[_KT, Any] | None],
+    cache: Callable[[Any], Optional[MutableMapping[_KT, Any]]],
     # ignoring the mypy error to be consistent with the type used
     # in https://github.com/python/typeshed/tree/master/stubs/cachetools
     key: Callable[..., _KT] = keys.hashkey,  # type:ignore
-    lock: Callable[[Any], "AbstractContextManager[Any]"] | None = None,
+    lock: Optional[Callable[[Any], "AbstractContextManager[Any]"]] = None,
 ) -> IdentityFunction:
     """Decorator to wrap a class or instance method with a memoizing
     callable that saves results in a cache. This works similarly to
