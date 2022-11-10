@@ -9,16 +9,16 @@ readme = "README.rst"
 [tool.poetry.dependencies]
 python = "^3.8"
 cachetools = "^5.2.0"
-mypy = "^0.982"
-types-cachetools = "^5.2.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
+mypy = "^0.982"
 pytest = "^7.1.3"
 isort = "^5.10.1"
 pylint = "^2.15.3"
 Sphinx = "^5.3.0"
 sphinx-rtd-theme = "^1.0.0"
+types-cachetools = "^5.2.1"
 
 [build-system]
 requires = ["poetry-core"]
