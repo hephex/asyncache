@@ -68,23 +68,33 @@ def cached(
 
             async def wrapper(*args, **kwargs):
                 k = key(*args, **kwargs)
+
+                async with lock:
+                    try:
+                        task = cache[k]
+
+                        cleanup = False
+
+                    except KeyError:
+                        val = func(*args, **kwargs)
+
+                        task = asyncio.Task(val)
+
+                        cache[k] = task
+
+                        cleanup = True
+
                 try:
-                    async with lock:
-                        return cache[k]
+                    r = await task
 
-                except KeyError:
-                    pass  # key not found
+                    return r
 
-                val = await func(*args, **kwargs)
+                except Exception:
+                    if cleanup:
+                        async with lock:
+                            del cache[k]
 
-                try:
-                    async with lock:
-                        cache[k] = val
-
-                except ValueError:
-                    pass  # val too large
-
-                return val
+                    raise
 
         else:
 

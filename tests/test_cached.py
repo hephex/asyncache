@@ -93,7 +93,6 @@ class SyncMixin:
 
     def test_decorator_lock(self):
         class Lock(object):
-
             count = 0
 
             def __enter__(self):
@@ -194,7 +193,6 @@ class AsyncMixin:
     @sync
     async def test_decorator_lock_async(self):
         class Lock(object):
-
             count = 0
 
             async def __aenter__(self):
@@ -209,11 +207,11 @@ class AsyncMixin:
         self.assertEqual(len(cache), 0)
         self.assertEqual(wrapper.__wrapped__, self.coro)
         self.assertEqual((await wrapper(0)), 0)
+        self.assertEqual(Lock.count, 1)
+        self.assertEqual((await wrapper(1)), 1)
         self.assertEqual(Lock.count, 2)
         self.assertEqual((await wrapper(1)), 1)
-        self.assertEqual(Lock.count, 4)
-        self.assertEqual((await wrapper(1)), 1)
-        self.assertEqual(Lock.count, 5)
+        self.assertEqual(Lock.count, 3)
 
 
 class DictWrapperTest(unittest.TestCase, SyncMixin, AsyncMixin):
